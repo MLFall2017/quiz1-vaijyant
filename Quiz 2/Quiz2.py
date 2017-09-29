@@ -31,8 +31,8 @@ def mean_center(data_values):
     return data_values - mean_vector(data_values)
     
 #5. covariance matrix
-def covariance_matrix(data_values):
-    cov_mat = np.cov(data_values, rowvar=False)
+def covariance_matrix(data):
+    cov_mat = np.cov(data.astype(float), rowvar=False)
     #Does row represents a feature? False. Row is an observation.
     #Hence rowvar is False
     #bias by default is false, if bias is false
@@ -51,7 +51,7 @@ def pca(data):
     mean_center_data = mean_center(data)
     eig_value, eig_vector = eigen_value_vector(data)
     eig_pairs = [(np.abs(eig_value[i]), eig_vector[:,i]) for i in range(len(data[0]))]
-    eig_pairs.sort(reverse=True) #sort in descending order
+    #eig_pairs.sort(reverse=True) #sort in descending order
     
     eig_vector_matrix = np.hstack((eig_pairs[i][1].reshape(data.shape[1],1)) for i in range(len(data[0])))
     
@@ -207,7 +207,7 @@ ax.set_ylabel('PC2')
 fig.show()
 
 
-#6.1.	What is the total variance of all of the PCs. Is it equal to the total
+#6. 	What is the total variance of all of the PCs. Is it equal to the total
 #variance of the original variables before standardization?
 np.var(pca_results["PC_variance"])
 
